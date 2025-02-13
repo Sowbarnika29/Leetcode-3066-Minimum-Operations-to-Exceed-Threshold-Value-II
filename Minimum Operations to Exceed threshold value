@@ -1,0 +1,44 @@
+C++:
+
+class Solution {
+public:
+    int minOperations(vector<int>& nums, int k) {
+        priority_queue<long long ,vector<long long >,greater<long long>> minheap(nums.begin(),nums.end());
+        int count = 0;
+        while(!minheap.empty()){
+            long long mini1=minheap.top();
+           
+            if(mini1 >= k){
+                break;
+            }else{
+                 minheap.pop();
+                long long mini2=minheap.top();
+                minheap.pop();
+
+                 minheap.push(2 * (min(mini1,mini2))  + max(mini1,mini2));
+            count++;
+            }
+           
+        }
+        return count;
+    }
+};
+
+
+Python:
+
+import heapq
+class Solution:
+    def minOperations(self, nums: List[int], k: int) -> int:
+        heapq.heapify(nums)  # Convert nums into minheap
+        ctr=0
+        while(nums):
+            mini1=heapq.heappop(nums)
+            if(mini1>=k):
+                break
+            else:
+                mini2=heapq.heappop(nums)
+                heapq.heappush(nums, 2 * min(mini1,mini2) + max(mini1,mini2))
+                ctr+=1
+
+        return ctr
